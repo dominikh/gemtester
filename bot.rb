@@ -64,15 +64,8 @@ bot = Cinch::Bot.new do
   configure do |c|
     c.server = "irc.freenode.net"
     c.nick = "gemtester"
-    c.channels = ["#dominikh"]
+    c.channels = ["#gem-testers"]
     c.plugins.plugins = [GemTester]
-  end
-
-  # TODO remove this, it's only for testing
-  on(:message, /^!join (.+)/) do |m, channel|
-    if m.user.authname == "DominikH"
-      Channel(channel).join
-    end
   end
 end
 
