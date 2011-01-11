@@ -56,7 +56,7 @@ class GemTester
     remaining = versions.size - 3
     s << "[#{name}] #{remaining} more versions..." if remaining > 0
 
-    m.reply s.join
+    m.reply s.join("\n")
   end
 end
 
