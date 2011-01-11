@@ -76,5 +76,8 @@ bot = Cinch::Bot.new do
   end
 end
 
+trap("INT") do
+  bot.quit "Bot has been killed."
+end
 
 bot.start
