@@ -50,7 +50,7 @@ class GemTester
       return
     end
 
-    versions = gem.versions
+    versions = gem.versions.sort_by {|v| v.number}.reverse
     s = versions[0..2].map { |version| "[%s %s] %d failed / %d successful" % [name, version.number, version.failed, version.successful] }
 
     remaining = versions.size - 3
