@@ -34,7 +34,7 @@ end
 
 class GemTester
   include Cinch::Plugin
-  AnnounceMessage = "In the last 60 minutes, %d passing and %d failing test results for ? different gems have been submitted."
+  AnnounceMessage = "In the last 60 minutes, %d passing and %d failing test results for %d different gems have been submitted."
 
   match "announce", method: :announce_new_tests
   timer 60*60, method: :announce_new_tests
@@ -42,7 +42,10 @@ class GemTester
     open("http://www.gem-testers.org/test_results.json") do |f|
       json = JSON.load(f.read)
       return if json["pass_count"] + json["fail_count"] == 0 && m.nil?
-      Channel(config[:channel]).send AnnounceMessage % [json["pass_count"], json["fail_count"]]
+
+      total_gems = json["test_results"].map { |result| result["rubygem"]["name"] }.uniq.count
+
+      Channel(config[:channel]).send AnnounceMessage % [json["pass_count"], json["fail_count"], total_gems]
       # TODO infos on how many different games
     end
   end
